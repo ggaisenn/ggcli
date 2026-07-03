@@ -10,6 +10,7 @@ try{
     const args = arg({
      '--open': Boolean,
      '--buildcheck': Boolean,
+     '--help': Boolean,
     });
     
     if(args['--open']){
@@ -17,6 +18,9 @@ try{
     }
     if(args['--buildcheck']){
         console.log("Providing app info..")
+    }
+    if(args['--help']){
+        gguide()
     }
 }catch(e){
     console.log(e.message);
