@@ -4,7 +4,9 @@
 //console.log(process.argv);
 
 //To parse command line arguements
-const arg = require('arg');
+
+import arg from 'arg';
+import chalk from 'chalk';
 
 try{
     const args = arg({
@@ -14,21 +16,22 @@ try{
     });
     
     if(args['--open']){
-     console.log("Opening the app..");
+     console.log(chalk.green("Opening the app.."));
     }
     if(args['--buildcheck']){
-        console.log("Providing app info..")
+        console.log(chalk.yellow("Providing app info.."))
     }
     if(args['--help']){
         gguide()
     }
 }catch(e){
-    console.log(e.message);
+    console.log(chalk.red(e.message));
     console.log();
     gguide()
 }
 
 function gguide(){
-    console.log("--open: Opens the app")
-    console.log("--buildcheck: Check the app's build")
+    console.log(chalk.blue("--open: Opens the app"));
+    console.log(chalk.blue("--buildcheck: Check the app's build"));
+    console.log(chalk.blue("--help: Show this help message"));
 }
