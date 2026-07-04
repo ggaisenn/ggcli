@@ -8,7 +8,6 @@ export default async function getConfig() {
     const pkgPath = await packageUp();
     const pkg = require(pkgPath);
     if (pkg.tool) {
-       console.log('Found configuration', pkg.tool);
        return pkg.tool;
     } else {
         console.log(chalk.yellow('Could not find configuration, using Default configuration'));
