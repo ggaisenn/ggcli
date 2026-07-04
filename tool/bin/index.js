@@ -7,6 +7,10 @@
 
 import arg from 'arg';
 import chalk from 'chalk';
+import { packageUp } from 'package-up'; 
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 try{
     const args = arg({
@@ -16,6 +20,13 @@ try{
     });
     
     if(args['--open']){
+     const pkgPath = await packageUp();
+     const pkg = require(pkgPath);
+     if (pkg.tool) {
+       console.log('Found configuration', pkg.tool);
+      } else {
+        console.log(chalk.yellow('Could not find configuration, using Default configuration'));
+       }
      console.log(chalk.green("Opening the app.."));
     }
     if(args['--buildcheck']){
