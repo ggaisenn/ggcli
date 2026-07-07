@@ -1,6 +1,6 @@
 import chalk from 'chalk';
 import {cosmiconfigSync} from 'cosmiconfig';
-const configLoad = cosmiconfigSync('tool');
+const configLoad = cosmiconfigSync('gg-cli');
 import { createRequire } from 'module';
 
 const require = createRequire(import.meta.url);
