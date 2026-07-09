@@ -16,7 +16,7 @@ export default async function getConfig() {
         const isvalid = ajv.validate(schema, result.config);
         if(!isvalid){
             console.log(chalk.red('Invalid configuration'));
-            console.log(chalk.red(ajv.errors));
+            console.log(chalk.red(JSON.stringify(ajv.errors, null, 2)));
             process.exit(1);
         }
         console.log(chalk.green('Configuration found'));
