@@ -2,7 +2,7 @@ import chalk from 'chalk';
 import {cosmiconfigSync} from 'cosmiconfig';
 const configLoad = cosmiconfigSync('gg-cli');
 import { createRequire } from 'module';
-import schema from './schema.json';
+import schema from './schema.json' with { type: 'json' };
 import Ajv from 'ajv';
 const ajv = new Ajv();
 
