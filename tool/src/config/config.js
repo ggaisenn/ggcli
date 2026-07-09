@@ -15,17 +15,17 @@ const require = createRequire(import.meta.url);
 export default async function getConfig() {
     const result = configLoad.search(process.cwd());
     if (result) {
-        const isvalid = ajv.validate(schema, result.config);
+        const isvalid = ajv.validate(schema, result.config.default);
         if(!isvalid){
  
             logger.warning('Invalid configuration');
             console.log();
-            console.log(betterAjvErrors(schema, result.config, ajv.errors));
+            console.log(betterAjvErrors(schema, result.config.default, ajv.errors));
             console.log();
             process.exit(1);
         }
-        logger.debug('Configuration found', JSON.stringify(result.config));
-        return result.config;
+        logger.debug('Configuration found', JSON.stringify(result.config.default));
+        return result.config.default;
     } else {
         logger.warning('Could not find configuration, using Default configuration');
         return {port: 1234};
