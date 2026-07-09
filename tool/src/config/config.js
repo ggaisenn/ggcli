@@ -4,7 +4,8 @@ const configLoad = cosmiconfigSync('gg-cli');
 import { createRequire } from 'module';
 import schema from './schema.json' with { type: 'json' };
 import Ajv from 'ajv';
-const ajv = new Ajv();
+import betterAjvErrors from 'better-ajv-errors';
+const ajv = new Ajv({jsonPointers: true});
 
 
 
@@ -15,8 +16,11 @@ export default async function getConfig() {
     if (result) {
         const isvalid = ajv.validate(schema, result.config);
         if(!isvalid){
+ 
             console.log(chalk.red('Invalid configuration'));
-            console.log(chalk.red(JSON.stringify(ajv.errors, null, 2)));
+            console.log();
+            console.log(betterAjvErrors(schema, result.config, ajv.errors));
+            console.log();
             process.exit(1);
         }
         console.log(chalk.green('Configuration found'));
