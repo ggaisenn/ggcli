@@ -6,7 +6,7 @@ import { createRequire } from 'module';
 import schema from './schema.json' with { type: 'json' };
 import Ajv from 'ajv';
 import betterAjvErrors from 'better-ajv-errors';
-const ajv = new Ajv({jsonPointers: true});
+const ajv = new Ajv();
 
 
 
