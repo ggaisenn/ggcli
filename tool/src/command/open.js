@@ -1,7 +1,8 @@
 import arg from 'arg';
-import chalk from 'chalk';
+import Logger from '../logger.js';
+const logger = Logger('open.js');
 
 export default async function open(config) {
-  console.log(chalk.green("Opening the app.."));
-  console.log(chalk.gray('Received configuration in open -'), config);
+  logger.debug("Opening the app..");
+  logger.log('Received configuration in open -', JSON.stringify(config));
 }
