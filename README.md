@@ -166,16 +166,16 @@ ggcli --open
 
 | Step | Feature                                      | Status |
 | ---- | -------------------------------------------- | ------ |
-| 1    | Script binary entry (`bin/index.js`)         | Done   |
-| 2    | Command-line arguments parsing (`arg`)       | Done   |
-| 3    | Configuration file search (`cosmiconfig`)    | Done   |
-| 4    | Schema-based verification (`ajv`)            | Done   |
-| 5    | Custom JSON Schema configuration rules       | Done   |
-| 6    | Better validation logs (`better-ajv-errors`) | Done   |
-| 7    | Custom logging with color themes (`chalk`)   | Done   |
-| 8    | Namespace debugging flag (`debug`)           | Done   |
-| 9    | Launcher command logic (`open`)              | Done   |
-| 10   | Global package execution links (`npm link`)  | Done   |
+| 1    | Script binary entry (`bin/index.js`)         |  Done  |
+| 2    | Command-line arguments parsing (`arg`)       |  Done  |
+| 3    | Custom logging with color themes (`chalk`)   |  Done  |
+| 4    | Launcher command logic (`open`)              |  Done  |
+| 5    | Configuration file search (`cosmiconfig`)    |  Done  |
+| 6    | Global package execution links (`npm link`)  |  Done  |
+| 7    | Custom JSON Schema configuration rules       |  Done  |
+| 8    | Schema-based verification (`ajv`)            |  Done  |
+| 9    | Better validation logs (`better-ajv-errors`) |  Done  |
+| 10   | Namespace debugging flag (`debug`)           |  Done  |
 
 ---
 
