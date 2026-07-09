@@ -1,6 +1,6 @@
 # ggcli
 
-A Command Line Interface (CLI) skeleton built in Node.js. It features dynamic configuration loading via `cosmiconfig`, robust configuration validation using `ajv` schemas, detailed validation error formatting with `better-ajv-errors`, and namespace-based console logging.
+A Command Line Interface (CLI) skeleton built using Node.js. It features dynamic configuration loading via `cosmiconfig`, robust configuration validation using `ajv` schemas, detailed validation error formatting with `better-ajv-errors`, and namespace-based console logging.
 
 ---
 
