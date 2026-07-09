@@ -1,4 +1,5 @@
-import chalk from 'chalk';
+import Logger from '../logger.js';
+const logger = Logger('config.js');
 import {cosmiconfigSync} from 'cosmiconfig';
 const configLoad = cosmiconfigSync('gg-cli');
 import { createRequire } from 'module';
@@ -17,16 +18,16 @@ export default async function getConfig() {
         const isvalid = ajv.validate(schema, result.config);
         if(!isvalid){
  
-            console.log(chalk.red('Invalid configuration'));
+            logger.warning('Invalid configuration');
             console.log();
             console.log(betterAjvErrors(schema, result.config, ajv.errors));
             console.log();
             process.exit(1);
         }
-        console.log(chalk.green('Configuration found'));
+        logger.debug('Configuration found');
         return result.config;
     } else {
-        console.log(chalk.yellow('Could not find configuration, using Default configuration'));
+        logger.warning('Could not find configuration, using Default configuration');
         return {port: 1234};
     }
 
