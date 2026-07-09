@@ -24,7 +24,7 @@ export default async function getConfig() {
             console.log();
             process.exit(1);
         }
-        logger.debug('Configuration found');
+        logger.debug('Configuration found', JSON.stringify(result.config));
         return result.config;
     } else {
         logger.warning('Could not find configuration, using Default configuration');
