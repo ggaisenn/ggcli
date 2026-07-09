@@ -6,7 +6,8 @@
 //To parse command line arguements
 
 import arg from 'arg';
-import chalk from 'chalk';
+import Logger from '../src/logger.js';
+const logger = Logger('index.js');
 import open from '../src/command/open.js';
 import getConfig from '../src/config/config.js';
 
@@ -24,19 +25,19 @@ try{
         open(configData);
     }
     if(args['--buildcheck']){
-        console.log(chalk.yellow("Providing app info.."))
+        logger.debug("Providing app info..")
     }
     if(args['--help']){
         gguide()
     }
 }catch(e){
-    console.log(chalk.red(e.message));
+    logger.error(e.message);
     console.log();
     gguide()
 }
 
 function gguide(){
-    console.log(chalk.blue("--open: Opens the app"));
-    console.log(chalk.blue("--buildcheck: Check the app's build"));
-    console.log(chalk.blue("--help: Show this help message"));
+    logger.highlight("--open: Opens the app");
+    logger.highlight("--buildcheck: Check the app's build");
+    logger.highlight("--help: Show this help message");
 }
