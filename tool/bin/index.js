@@ -5,7 +5,7 @@
 
 //To parse command line arguements
 
-import arg from 'arg';
+import openPackage from 'open';
 import Logger from '../src/logger.js';
 const logger = Logger('index.js');
 import open from '../src/command/open.js';
@@ -15,14 +15,17 @@ import getConfig from '../src/config/config.js';
 
 try{
     const args = arg({
-     '--open': Boolean,
+     '--open': String,
      '--buildcheck': Boolean,
      '--help': Boolean,
     });
     
     if(args['--open']){
         const configData = await getConfig();
-        open(configData);
+
+        configData.targetApp = args['--open'];
+
+        await open(configData);
     }
     if(args['--buildcheck']){
         logger.debug("Providing app info..")
