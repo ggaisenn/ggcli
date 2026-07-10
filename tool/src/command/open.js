@@ -1,4 +1,5 @@
 import openPackage from 'open';
+import commandExists from 'command-exists';
 import Logger from '../logger.js';
 const logger = Logger('open.js');
 
