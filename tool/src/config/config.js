@@ -27,7 +27,7 @@ export default async function getConfig() {
         logger.debug('Configuration found', JSON.stringify(result.config.default));
         return result.config.default;
     } else {
-        logger.warning('Could not find configuration, using Default configuration');
+        logger.debug('Could not find configuration, using Default configuration');
         return {port: 1234};
     }
 

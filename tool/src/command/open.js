@@ -4,7 +4,7 @@ import Logger from '../logger.js';
 const logger = Logger('open.js');
 
 export default async function open(config) {
-  logger.log("Opening the app..");
+  logger.log("Loading...");
   logger.debug('Received configuration in open -', JSON.stringify(config));
 
   const target = config.targetApp;
@@ -14,10 +14,10 @@ export default async function open(config) {
     return;
   }
 
-    // To Validate if it's a browser link (URL)
-  const isUrl = target.startsWith('http://') || target.startsWith('https://');
-
   try {
+
+     // To Validate if it's a browser link (URL)
+    const isUrl = target.startsWith('http://') || target.startsWith('https://');
     logger.debug(`Attempting to open: ${target}`);
 
     if (isUrl) {
