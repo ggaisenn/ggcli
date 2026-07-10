@@ -1,4 +1,4 @@
-import arg from 'arg';
+import openPackage from 'open';
 import Logger from '../logger.js';
 const logger = Logger('open.js');
 
