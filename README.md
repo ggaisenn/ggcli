@@ -1,6 +1,6 @@
 # ggcli
 
-A Command Line Interface (CLI) skeleton built using Node.js. It features dynamic configuration loading via `cosmiconfig`, robust configuration validation using `ajv` schemas, detailed validation error formatting with `better-ajv-errors`, and namespace-based console logging.
+A Command Line Interface (CLI) tool built using Node.js that enables users to launch web links and local applications. It features dynamic configuration loading via `cosmiconfig`, robust configuration validation using `ajv` schemas, detailed validation error formatting with `better-ajv-errors`, and namespace-based console logging.
 
 ---
 
@@ -8,12 +8,16 @@ A Command Line Interface (CLI) skeleton built using Node.js. It features dynamic
 
 `ggcli` processes CLI flags, dynamically searches the user's directory tree for configuration files (like `gg-cli.config.js`), validates the configurations against a strict JSON Schema definition, and routes actions to command modules. 
 
+It can also launches your targeted apps or URLs across macOS, Windows, and Linux. 
+
+Before firing anything up, it acts as a safety net: it automatically checks if your URLs are formatted correctly and verifies that local apps are actually installed on your machine, preventing frustrating silent failures.
+
 ---
 
 ## Architecture
 
 ```
-User CLI Command:  ggcli --open
+User CLI Command:  ggcli --open <APP_PATH/URL_LINK>
                            │
                            ▼
                   [ Parse Arguments ] (arg)
@@ -31,6 +35,21 @@ User CLI Command:  ggcli --open
         │                 │
         ▼                 ▼
    [ Run Command ]   [ Exit with Error ] (better-ajv-errors)
+   (command/open.js)
+        │
+        ├───► [Empty target] ──► [Return with Error]
+        |
+        ├───► [ Is it a URL? ] ──────(Yes)──────► [ Validate URL Syntax ]
+        │                                                   │
+        └───► (No)                               ┌──────────────────────┐
+               │                                 │                      │  
+               ▼                                 ▼                      ▼
+      [ Check commandExists() ]         [ Wait openPackage()]    [ Error? Log Exception ]
+        ┌──────┴──────┐                          |
+     (True)        (False)                       ▼          
+        │             │               [Load URL in Default Browser]
+        ▼             ▼
+  [ Launch App ]   [ Log App Missing Error ]
 ```
 
 The config loader uses the following JSON schema mapping:
@@ -54,10 +73,11 @@ The config loader uses the following JSON schema mapping:
 ### `index.js` — CLI Entry Point & Flag Parser
 
 1. Uses `arg` to parse the CLI input flags:
-   - `--open`: Triggers config loading and starts the application simulation.
+   - `--open <APP_PATH/URL_LINK>`: Triggers config loading and launches a browser URL or a local machine application based on user configuration.
    - `--buildcheck`: Runs status diagnostics.
    - `--help`: Outputs the CLI manual and options guide.
-2. Wraps execution in a try-catch block to handle invalid flag entries, logging errors in red and falling back to the help guide.
+
+2. Wraps execution in a try-catch block to handle invalid flag entries, url links, local application paths, logging errors in red and falling back to the help guide.
 
 ### `getConfig()` — Config Resolver & Schema Validator (`config/config.js`)
 
@@ -66,9 +86,13 @@ The config loader uses the following JSON schema mapping:
 3. If schema validation fails, prints clean, human-readable schema errors to the console using `better-ajv-errors` and terminates the process with `process.exit(1)`.
 4. If no configuration is discovered, issues a warning and defaults to `{ port: 1234 }`.
 
-### `open(config)` — App Command Router (`command/open.js`)
+### `open(config)` — Cross-Platform Application & URL Launcher (`command/open.js`)
 
-Receives the validated configuration object, log-triggers the launcher, and dumps the configuration metadata securely via the debug logger namespace.
+Receives the validated configuration object and attempts to open the specified `targetApp` property:
+1. **URL Validation**: Detects if the target starts with `http://` or `https://` and verifies its syntax using the native `URL` constructor.
+2. **Local App Verification**: If it isn't a web link, it safely utilizes `command-exists` to confirm the application binary or directory path exists on the host machine before launching.
+3. **Cross-Platform Execution**: Safely spawns the target using the underlying `open` system package, abstracting
+OS-specific launcher variations with isolated error handling.
 
 ### `Logger(name)` — Terminal Theme Decorator (`logger.js`)
 
@@ -78,6 +102,24 @@ Provides unified terminal text formatting using `chalk` and namespace-based exec
 - **`highlight(...)`** — Blue messages for help listings.
 - **`error(...)`** — Red messages for execution exceptions.
 - **`debug(...)`** — Namespace-specific debug logs (active only when running with `DEBUG=...` environment variables).
+---
+
+## Current Status
+
+| Step | Feature                                      | Status |
+| ---- | -------------------------------------------- | ------ |
+| 1    | Script binary entry (`bin/index.js`)         |  Done  |
+| 2    | Command-line arguments parsing (`arg`)       |  Done  |
+| 3    | Custom logging with color themes (`chalk`)   |  Done  |
+| 4    | Launcher command logic (`open`)              |  Done  |
+| 5    | Configuration file search (`cosmiconfig`)    |  Done  |
+| 6    | Global package execution links (`npm link`)  |  Done  |
+| 7    | Custom JSON Schema configuration rules       |  Done  |
+| 8    | Schema-based verification (`ajv`)            |  Done  |
+| 9    | Better validation logs (`better-ajv-errors`) |  Done  |
+| 10   | Namespace debugging flag (`debug`)           |  Done  |
+| 11	 | Cross-platform URL format validation	        |  Done  |
+| 12	 | Host system local app check (command-exists) |  Done  |
 
 ---
 
@@ -132,7 +174,7 @@ node tool/bin/index.js --help
 node tool/bin/index.js --buildcheck
 
 # Open the app using the configuration loader
-node tool/bin/index.js --open
+node tool/bin/index.js --open <APP_PATH/URL_LINK>
 ```
 
 ### 3. Testing with Configurations
@@ -144,7 +186,7 @@ To see the schema validation and configuration locator in action:
 cd testProject
 
 # Run the CLI from the context of testProject (loads testProject/gg-cli.config.js)
-node ../tool/bin/index.js --open
+node ../tool/bin/index.js --open <APP_PATH/URL_LINK>
 ```
 
 ### 4. Linking Globally
@@ -157,30 +199,13 @@ npm link
 
 # Run globally from any directory
 ggcli --help
-ggcli --open
+ggcli --open <APP_PATH/URL_LINK>
 ```
-
----
-
-## Current Status
-
-| Step | Feature                                      | Status |
-| ---- | -------------------------------------------- | ------ |
-| 1    | Script binary entry (`bin/index.js`)         |  Done  |
-| 2    | Command-line arguments parsing (`arg`)       |  Done  |
-| 3    | Custom logging with color themes (`chalk`)   |  Done  |
-| 4    | Launcher command logic (`open`)              |  Done  |
-| 5    | Configuration file search (`cosmiconfig`)    |  Done  |
-| 6    | Global package execution links (`npm link`)  |  Done  |
-| 7    | Custom JSON Schema configuration rules       |  Done  |
-| 8    | Schema-based verification (`ajv`)            |  Done  |
-| 9    | Better validation logs (`better-ajv-errors`) |  Done  |
-| 10   | Namespace debugging flag (`debug`)           |  Done  |
-
 ---
 
 ## Concepts Demonstrated
 
+- **Safe Cross-Platform Execution**: Built a reliable way to open web links or local apps across different operating systems. It validates URLs and checks if an app actually exists on your computer before trying to run it, preventing silent crashes.
 - **Real-Deal Terminal Tools**: Turned a standard script into a native command-line tool using #!/usr/bin/env node
 - **Smart Config Hunting**: Used cosmiconfig to let the tool automatically search up through folders to find your configuration files, meaning users don't have to constantly point to where their settings are.
 - **Validation**: Integrated ajv to check configuration files at runtime. If a setting is broken, the tool catches it instantly before it can crash anything down the line.
