@@ -29,8 +29,19 @@ export default async function open(config) {
       }
       await openPackage(target);
       logger.log(`Successfully opened the link: ${target}`);
+    } else{
+      // To Validate if the local app actually exists on the computer
+      const exists = await commandExists(target).catch(() => false);
+
+      if (!exists) {
+        logger.error(`Failed to open: "${target}" does not exist on this computer.`);
+        return;
+      }
+
+      await openPackage('', { app: { name: target } });
+      logger.log(`Successfully opened the app: ${target}`);
     }
   } catch(e){
-    logger.error(`Failed to open: ${target}: ${e.message}`);
+    logger.error(`Failed to open ${target}: ${e.message}`);
   }
 }
