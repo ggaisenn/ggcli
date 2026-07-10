@@ -14,10 +14,10 @@ export default async function open(config) {
   }
 
   try{
-    logger.debug('Attempting to open: ${target}');
+    logger.debug(`Attempting to open: ${target}`);
     await openPackage(target);
-    logger.log('Successfully opened the app: ${target}');
+    logger.log(`Successfully opened the app: ${target}`);
   }catch(e){
-    logger.error('Failed to open the app: ${target}: ${e.message}');
+    logger.error(`Failed to open the app: ${target}: ${e.message}`);
   }
 }
