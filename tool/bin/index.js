@@ -4,7 +4,7 @@
 //console.log(process.argv);
 
 //To parse command line arguements
-
+import arg from 'arg';
 import openPackage from 'open';
 import Logger from '../src/logger.js';
 const logger = Logger('index.js');
