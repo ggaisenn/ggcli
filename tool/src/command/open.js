@@ -9,15 +9,28 @@ export default async function open(config) {
   const target = config.targetApp;
 
   if(!target){
-    logger.error("No app or url specified by the user exists");
+    logger.error("No App or Url specified by the user exists");
     return;
   }
 
-  try{
+    // To Validate if it's a browser link (URL)
+  const isUrl = target.startsWith('http://') || target.startsWith('https://');
+
+  try {
     logger.debug(`Attempting to open: ${target}`);
-    await openPackage(target);
-    logger.log(`Successfully opened the app: ${target}`);
-  }catch(e){
-    logger.error(`Failed to open the app: ${target}: ${e.message}`);
+
+    if (isUrl) {
+      // Basic URL structural validation
+      try {
+        new URL(target);
+      } catch (e) {
+        logger.error(`Failed to open: "${target}" is not a valid URL format: "${e.message}"`);
+        return;
+      }
+      await openPackage(target);
+      logger.log(`Successfully opened the link: ${target}`);
+    }
+  } catch(e){
+    logger.error(`Failed to open: ${target}: ${e.message}`);
   }
 }
