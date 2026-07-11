@@ -124,7 +124,7 @@ Provides unified terminal text formatting using `chalk` and namespace-based exec
 | 10   | Namespace debugging flag (`debug`)           |  Done  |
 | 11	 | Cross-platform URL format validation	        |  Done  |
 | 12	 | Host system local app check (command-exists) |  Done  |
----------------- MORE FEATURES COMING SOON ---------------------
+|      |--------- MORE FEATURES COMING SOON ----------|        |
 
 ---
 
