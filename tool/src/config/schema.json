@@ -4,6 +4,9 @@
   "properties": {
     "port": {
       "type": "number"
+    },
+    "targetApp": {
+      "type": "string"
     }
   },
   "required": ["port"]
