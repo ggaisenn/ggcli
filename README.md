@@ -56,10 +56,14 @@ The config loader uses the following JSON schema mapping:
 
 ```json
 {
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "type": "object", 
   "properties": {
     "port": {
       "type": "number"
+    },
+    "targetApp": {
+      "type": "string"
     }
   },
   "required": ["port"]
@@ -202,6 +206,25 @@ ggcli --help
 ggcli --open <APP_PATH/URL_LINK>
 ```
 ---
+
+## Demo
+
+Here is how `ggcli` behaves when launching targets, managing smart fallbacks, and handling configuration errors.
+
+### 1. Launching a Web Link
+
+![Launching a URL](assets/demo-url.png)
+
+### 2. Launching a Local Machine App
+
+![Launching a Local App](assets/demo-app.png)
+
+### 3. Smart Configuration Fallbacks
+
+![Config Fallback Warning URL](assets/demo-fallback-url.png)
+
+
+![Config Fallback Warning App](assets/demo-fallback-app.png)
 
 ## Concepts Demonstrated
 
