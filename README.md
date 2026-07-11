@@ -206,6 +206,24 @@ ggcli --help
 ggcli --open <APP_PATH/URL_LINK>
 ```
 ---
+## Important Notes on Launching Targets
+
+To ensure `ggcli` resolves your targets correctly without throwing execution exceptions, please review the formatting guidelines below.
+
+### 🌐 Web Links & URLs
+
+* **Valid Format**: `"https://www.youtube.com"` or `"http://localhost:3000"`
+* **Invalid Format**: `"www.youtube.com"` (This will trigger a structural validation error)
+
+---
+
+### 🖥️ Local Desktop Applications 
+
+* **Valid Format (Absolute Path)**: `"/Applications/Slack.app"` *(macOS)*
+* **Invalid Format**: `"Slack"`
+
+
+---
 
 ## Demo
 
