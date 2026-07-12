@@ -163,8 +163,7 @@ Clone the repository, then install project and tool dependencies:
 # Navigate to the workspace
 cd gg-cli
 
-# Install dependencies for both the project root and the tool itself
-npm install
+# Install dependencies for the tool
 cd tool && npm install
 ```
 
