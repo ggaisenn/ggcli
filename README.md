@@ -8,7 +8,7 @@ A Command Line Interface (CLI) tool built using Node.js that enables users to la
 
 `ggcli` processes CLI flags, dynamically searches the user's directory tree for configuration files (like `gg-cli.config.js`), validates the configurations against a strict JSON Schema definition, and routes actions to command modules. 
 
-It can also launches your targeted apps or URLs across macOS, Windows, and Linux. 
+It can also launch your targeted apps (Only on macOS) or URLs (Cross-Platform). 
 
 Before firing anything up, it acts as a safety net: it automatically checks if your URLs are formatted correctly and verifies that local apps are actually installed on your machine, preventing frustrating silent failures.
 
@@ -110,21 +110,22 @@ Provides unified terminal text formatting using `chalk` and namespace-based exec
 
 ## Current Status
 
-| Step | Feature                                      | Status |
-| ---- | -------------------------------------------- | ------ |
-| 1    | Script binary entry (`bin/index.js`)         |  Done  |
-| 2    | Command-line arguments parsing (`arg`)       |  Done  |
-| 3    | Custom logging with color themes (`chalk`)   |  Done  |
-| 4    | Launcher command logic (`open`)              |  Done  |
-| 5    | Configuration file search (`cosmiconfig`)    |  Done  |
-| 6    | Global package execution links (`npm link`)  |  Done  |
-| 7    | Custom JSON Schema configuration rules       |  Done  |
-| 8    | Schema-based verification (`ajv`)            |  Done  |
-| 9    | Better validation logs (`better-ajv-errors`) |  Done  |
-| 10   | Namespace debugging flag (`debug`)           |  Done  |
-| 11	 | Cross-platform URL format validation	        |  Done  |
-| 12	 | Host system local app check (command-exists) |  Done  |
-|      |--------- MORE FEATURES COMING SOON ----------|        |
+| Step | Feature                                      | Status  |
+| ---- | -------------------------------------------- | ------  |
+| 1    | Script binary entry (`bin/index.js`)         |  Done   |
+| 2    | Command-line arguments parsing (`arg`)       |  Done   |
+| 3    | Custom logging with color themes (`chalk`)   |  Done   |
+| 4    | Launcher command logic (`open`)              |  Done   |
+| 5    | Configuration file search (`cosmiconfig`)    |  Done   |
+| 6    | Global package execution links (`npm link`)  |  Done   |
+| 7    | Custom JSON Schema configuration rules       |  Done   |
+| 8    | Schema-based verification (`ajv`)            |  Done   |
+| 9    | Better validation logs (`better-ajv-errors`) |  Done   |
+| 10   | Namespace debugging flag (`debug`)           |  Done   |
+| 11	 | Cross-platform URL format validation	        |  Done   |
+| 12	 | Host system local app check (command-exists) |  Done   |
+| 13   | Cross-Platform App launcher                  | Process |  
+|      |--------- MORE FEATURES COMING SOON ----------|         |
 
 ---
 
@@ -234,7 +235,7 @@ Here is how `ggcli` behaves when launching targets, managing smart fallbacks, an
 
 ![Launching a URL](assets/demo-url.png)
 
-### 2. Launching a Local Machine App
+### 2. Launching a Local Machine App (Only Works on macOS)
 
 ![Launching a Local App](assets/demo-app.png)
 
@@ -247,7 +248,7 @@ Here is how `ggcli` behaves when launching targets, managing smart fallbacks, an
 
 ## Concepts Demonstrated
 
-- **Safe Cross-Platform Execution**: Built a reliable way to open web links or local apps across different operating systems. It validates URLs and checks if an app actually exists on your computer before trying to run it, preventing silent crashes.
+- **Safe Execution**: Built a reliable way to open web links or local apps. It validates URLs and checks if an app actually exists on your computer before trying to run it, preventing silent crashes.
 - **Real-Deal Terminal Tools**: Turned a standard script into a native command-line tool using #!/usr/bin/env node
 - **Smart Config Hunting**: Used cosmiconfig to let the tool automatically search up through folders to find your configuration files, meaning users don't have to constantly point to where their settings are.
 - **Validation**: Integrated ajv to check configuration files at runtime. If a setting is broken, the tool catches it instantly before it can crash anything down the line.
