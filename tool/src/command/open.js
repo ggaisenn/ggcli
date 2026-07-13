@@ -3,6 +3,18 @@ import commandExists from 'command-exists';
 import Logger from '../logger.js';
 const logger = Logger('open.js');
 
+async function isValidURL(Refinedtarget, Usertarget){
+  //Basic URL Structure Validation
+   try {
+        new URL(Refinedtarget);
+    } catch (e) {
+        logger.error(`Failed to open: "${Usertarget}" is not a valid URL format: "${e.message}"`);
+        return;
+      }
+    await openPackage(Refinedtarget);
+    logger.log(`Successfully opened the link: ${Usertarget}`);
+}
+
 export default async function open(config) {
   logger.log("Loading...");
   logger.debug('Received configuration in open -', JSON.stringify(config));
@@ -15,34 +27,18 @@ export default async function open(config) {
   }
 
   try {
-
      // To Validate if it's a browser link (URL)
     const isUrl = target.startsWith('http://') || target.startsWith('https://');
     logger.debug(`Attempting to open: ${target}`);
 
     if (isUrl) {
-      // Basic URL structural validation
-      try {
-        new URL(target);
-      } catch (e) {
-        logger.error(`Failed to open: "${target}" is not a valid URL format: "${e.message}"`);
-        return;
-      }
-      await openPackage(target);
-      logger.log(`Successfully opened the link: ${target}`);
+      await isValidURL(target, target); //No need to Refine target
     } 
-    if(!isUrl){
+    else if(!isUrl){
 
-      const tar = 'https://' + target;
-
-      try {
-        new URL(tar);
-      } catch (e) {
-        logger.error(`Failed to open: "${target}" is not a valid URL format: "${e.message}"`);
-        return;
-      }
-      await openPackage(tar);
-      logger.log(`Successfully opened the link: ${target}`);
+      const tar = 'https://' + target; //Refine target
+      
+      await isValidURL(tar, target);
 
     }else{
       // To Validate if the local app actually exists on the computer
