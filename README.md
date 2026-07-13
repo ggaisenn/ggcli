@@ -110,22 +110,23 @@ Provides unified terminal text formatting using `chalk` and namespace-based exec
 
 ## Current Status
 
-| Step | Feature                                      | Status  |
-| ---- | -------------------------------------------- | ------  |
-| 1    | Script binary entry (`bin/index.js`)         |  Done   |
-| 2    | Command-line arguments parsing (`arg`)       |  Done   |
-| 3    | Custom logging with color themes (`chalk`)   |  Done   |
-| 4    | Launcher command logic (`open`)              |  Done   |
-| 5    | Configuration file search (`cosmiconfig`)    |  Done   |
-| 6    | Global package execution links (`npm link`)  |  Done   |
-| 7    | Custom JSON Schema configuration rules       |  Done   |
-| 8    | Schema-based verification (`ajv`)            |  Done   |
-| 9    | Better validation logs (`better-ajv-errors`) |  Done   |
-| 10   | Namespace debugging flag (`debug`)           |  Done   |
-| 11	 | Cross-platform URL format validation	        |  Done   |
-| 12	 | Host system local app check (command-exists) |  Done   |
-| 13   | Cross-Platform App launcher                  | Process |  
-|      |--------- MORE FEATURES COMING SOON ----------|         |
+| Step | Feature                                        | Status  |
+| ---- | --------------------------------------------   | ------  |
+| 1    | Script binary entry (`bin/index.js`)           |  Done   |
+| 2    | Command-line arguments parsing (`arg`)         |  Done   |
+| 3    | Custom logging with color themes (`chalk`)     |  Done   |
+| 4    | Launcher command logic (`open`)                |  Done   |
+| 5    | Configuration file search (`cosmiconfig`)      |  Done   |
+| 6    | Global package execution links (`npm link`)    |  Done   |
+| 7    | Custom JSON Schema configuration rules         |  Done   |
+| 8    | Schema-based verification (`ajv`)              |  Done   |
+| 9    | Better validation logs (`better-ajv-errors`)   |  Done   |
+| 10   | Namespace debugging flag (`debug`)             |  Done   |
+| 11	 | Cross-platform URL format validation	          |  Done   |
+| 12	 | Host system local app check (`command-exists`) |  Done   |
+| 13   | `www.` protocol handling                       |  Done   |
+| 14   | Cross-Platform App launcher                    | Process |
+|      |---------- MORE FEATURES COMING SOON -----------|         |
 
 ---
 
@@ -213,8 +214,9 @@ To ensure `ggcli` resolves your targets correctly without throwing execution exc
 
 ### 🌐 Web Links & URLs
 
-* **Valid Format**: `"https://www.youtube.com"` or `"http://localhost:3000"`
-* **Invalid Format**: `"www.youtube.com"` (This will trigger a structural validation error)
+* **Valid Format**: `"https://www.youtube.com"`, `"www.youtube.com"` or `"http://localhost:3000"`
+
+> Note: Web domains starting with `www.` is valid (eg.`"www.youtube.com"`)
 
 ---
 
@@ -234,11 +236,15 @@ Here is how `ggcli` behaves when launching targets, managing smart fallbacks, an
 
 ![Launching a URL](assets/demo-url.png)
 
-### 2. Launching a Local Machine App (Only Works on macOS)
+### 2. Launching a Web Link without Protocol Prefix
+
+![Launching a www URL](assets/demo-www-url.png)
+
+### 3. Launching a Local Machine App (Only Works on macOS)
 
 ![Launching a Local App](assets/demo-app.png)
 
-### 3. Smart Configuration Fallbacks
+### 4. Smart Configuration Fallbacks
 
 ![Config Fallback Warning URL](assets/demo-fallback-url.png)
 
