@@ -30,7 +30,21 @@ export default async function open(config) {
       }
       await openPackage(target);
       logger.log(`Successfully opened the link: ${target}`);
-    } else{
+    } 
+    if(!isUrl){
+
+      const tar = 'https://' + target;
+
+      try {
+        new URL(tar);
+      } catch (e) {
+        logger.error(`Failed to open: "${target}" is not a valid URL format: "${e.message}"`);
+        return;
+      }
+      await openPackage(tar);
+      logger.log(`Successfully opened the link: ${target}`);
+
+    }else{
       // To Validate if the local app actually exists on the computer
       const exists = await commandExists(target).catch(() => false);
 
