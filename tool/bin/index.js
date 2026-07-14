@@ -40,7 +40,8 @@ try{
 }
 
 function gguide(){
-    logger.highlight("--open <APP_PATH/URL_LINK>: Opens a specified App or URL in the default browser");
+    logger.highlight("--open <APP_PATH/URL_LINK>: Opens a specified App or URL in the default browser"); 
+    logger.highlight("  Examples: --open https://google.com, --open Slack, --open 'Visual Studio Code'");
     logger.highlight("--buildcheck: Check the app's build");
     logger.highlight("--help: Show this help message");
 }
