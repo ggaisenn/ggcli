@@ -3,6 +3,8 @@ import commandExists from 'command-exists';
 import Logger from '../logger.js';
 const logger = Logger('open.js');
 
+import { findMacApp } from '../util/findMacApp.js';
+
 async function isValidURL(Usertarget){
   //Basic URL Structure Validation
   const Refinedtarget = Usertarget.startsWith('www.') ? ('https://' + Usertarget) : Usertarget;
@@ -36,6 +38,19 @@ export default async function open(config) {
       await isValidURL(target); //No need to Refine target
     }else{
       // To Validate if the local app actually exists on the computer
+
+      let appPath = null;
+
+      if(process.platform == 'darwin'){
+        appPath = await findMacApp(target);
+      }
+        if(appPath){
+          logger.log(`Found macOS app: ${appPath}`);
+          await openPackage(appPath);
+          logger.log(`Successfully opened the app: ${target}`);
+          return;
+        }
+
       const exists = await commandExists(target).catch(() => false);
 
       if (!exists) {
