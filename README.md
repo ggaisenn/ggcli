@@ -125,7 +125,8 @@ Provides unified terminal text formatting using `chalk` and namespace-based exec
 | 11	 | Cross-platform URL format validation	          |  Done   |
 | 12	 | Host system local app check (`command-exists`) |  Done   |
 | 13   | `www.` protocol handling                       |  Done   |
-| 14   | Cross-Platform App launcher                    | Process |
+| 14   | macOS App Launch (e.g., `--open Slack`)        |  Done   |
+| 15   | Cross-Platform App launcher                    | Process |
 |      |---------- MORE FEATURES COMING SOON -----------|         |
 
 ---
@@ -157,7 +158,7 @@ gg-cli/
 ### Prerequisites
 - Node.js (v18+)
 
-### 1. Installation
+### 1. Installation & Linking Globally
 Clone the repository, then install project and tool dependencies:
 
 ```bash
@@ -168,19 +169,29 @@ cd gg-cli
 cd tool && npm install
 ```
 
-### 2. Execution
+To register the tool globally on your system, linking it to the `ggcli` executable name:
 
-You can run the script files directly via `node`:
+```bash
+# Inside the tool directory
+npm link
+
+# Run globally from any directory
+ggcli --help
+ggcli --open <APP_PATH/URL_LINK>
+```
+
+
+### 2. Execution
 
 ```bash
 # Display the help guide
-node tool/bin/index.js --help
+ggcli --help
 
 # Run a buildcheck validation
-node tool/bin/index.js --buildcheck
+ggcli --buildcheck
 
 # Open the app using the configuration loader
-node tool/bin/index.js --open <APP_PATH/URL_LINK>
+ggcli --open <APP_PATH/URL_LINK>
 ```
 
 ### 3. Testing with Configurations
@@ -192,21 +203,9 @@ To see the schema validation and configuration locator in action:
 cd testProject
 
 # Run the CLI from the context of testProject (loads testProject/gg-cli.config.js)
-node ../tool/bin/index.js --open <APP_PATH/URL_LINK>
-```
-
-### 4. Linking Globally
-To register the tool globally on your system, linking it to the `ggcli` executable name:
-
-```bash
-# Inside the tool directory
-cd tool
-npm link
-
-# Run globally from any directory
-ggcli --help
 ggcli --open <APP_PATH/URL_LINK>
 ```
+
 ---
 ## Important Notes on Launching Targets
 
@@ -222,8 +221,11 @@ To ensure `ggcli` resolves your targets correctly without throwing execution exc
 
 ### 🖥️ Local Desktop Applications 
 
-* **Valid Format (Absolute Path)**: `"/Applications/Slack.app"` *(macOS)*
-* **Invalid Format**: `"Slack"`
+*(Only on macOS)*
+
+* **Valid Format (Absolute Path)**: `"/Applications/Slack.app"` 
+* **Valid Format (App Name)**: `"Slack"`, `"Chrome"`, `"Discord"`, `"Visual Studio Code"`
+* **Invalid Format**: `"NonExistentApp"`(Any app that does not exist on your local computer)
 
 
 ---
@@ -240,11 +242,18 @@ Here is how `ggcli` behaves when launching targets, managing smart fallbacks, an
 
 ![Launching a www URL](assets/demo-www-url.png)
 
-### 3. Launching a Local Machine App (Only Works on macOS)
+
+### 3. Launching a macOS App by Name (New Feature)
+
+Now you can launch macOS apps using just their name instead of the full path!
+
+![Launching a macOS App by Name](assets/demo-app-name.png)
+
+### 4. Launching a Local Machine App (Only Works on macOS)
 
 ![Launching a Local App](assets/demo-app.png)
 
-### 4. Smart Configuration Fallbacks
+### 5. Smart Configuration Fallbacks
 
 ![Config Fallback Warning URL](assets/demo-fallback-url.png)
 
